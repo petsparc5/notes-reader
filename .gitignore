@@ -1,0 +1,10 @@
+.classpath
+.project
+.settings
+target
+
+.springBeans
+
+aop.log
+
+src/main/resources/logback.out.xml
