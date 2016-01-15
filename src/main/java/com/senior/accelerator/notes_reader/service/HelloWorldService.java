@@ -17,7 +17,10 @@ public class HelloWorldService {
 
     private static final String MESSAGE = "message";
     private static final String MESSAGE_VALUE = "Hello World, Hello Master Peter!";
-    
+    public static final String SPRING = "spring";
+    public static final String SPRING_NOTES = "springNotes";
+    public static final String NOTES = "notes";
+
     //@Autowired
     private NoteRepository noteRepository;
 
@@ -34,7 +37,11 @@ public class HelloWorldService {
         noteRepository.save(new Note("jpa", "I have no idea what I'm doing"));
         noteRepository.save(new Note("log", "This seems a little easier"));
         noteRepository.save(new Note("spring", "Not this again!! :("));
-        map.put("notes", noteRepository.findAll());
-        map.put("springNotes", noteRepository.findBySubject("spring"));
+        map.put(NOTES, noteRepository.findAll());
+        map.put(SPRING_NOTES, noteRepository.findBySubject(SPRING));
+    }
+
+    protected void setNoteRepository(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
 }
