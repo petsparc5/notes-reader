@@ -4,14 +4,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.testng.Assert.assertTrue;
 
-import org.easymock.EasyMockSupport;
 import org.springframework.ui.ModelMap;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
  * Unit test for {@HelloWorldService}.
- * Created by Peter_Takacs on 14/01/2016.
+ * @author Peter_Takacs
  */
 public class HelloWorldServiceTest {
 

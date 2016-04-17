@@ -13,11 +13,11 @@ import com.senior.accelerator.notes_reader.service.HelloWorldService;
 
 /**
  * Test for {@HelloWorldController}.
- * Created by Peter_Takacs on 14/01/2016.
+ * @author Peter_Takacs
  */
 public class HelloWorldControllerTest extends EasyMockSupport {
 
-    public static final String INDEX = "index";
+    private static final String INDEX = "index";
     private HelloWorldController helloWorldController;
     private HelloWorldService helloWorldService;
 
