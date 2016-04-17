@@ -18,7 +18,6 @@ import com.senior.accelerator.notes_reader.service.HelloWorldService;
 public class HelloWorldControllerTest extends EasyMockSupport {
 
     public static final String INDEX = "index";
-    public static final String PLAY = "play";
     private HelloWorldController helloWorldController;
     private HelloWorldService helloWorldService;
 
@@ -42,19 +41,5 @@ public class HelloWorldControllerTest extends EasyMockSupport {
         //THEN
         verifyAll();
         assertThat(INDEX, is(actual));
-    }
-
-    @Test
-    public void testPlay() {
-        //GIVEN
-        ModelMap map = new ModelMap();
-        helloWorldService.playWithDB(map);
-        expectLastCall();
-        replayAll();
-        //WHEN
-        String actual = helloWorldController.play(map);
-        //THEN
-        verifyAll();
-        assertThat(PLAY, is(actual));
     }
 }

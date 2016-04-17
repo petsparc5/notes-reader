@@ -27,7 +27,6 @@ public class HelloWorldController {
     /**
      * Display Hello World.
      * @param map - Modelmap
-
      * @return with index.
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -35,17 +34,6 @@ public class HelloWorldController {
         logger.error(LOG_MESSAGE);
         helloWorldService.addMessage(map);
         return "index";
-    }
-    
-    /**
-     * Play with db.
-     * @param map - Modelmap
-     * @return with index.
-     */
-    @RequestMapping(value = "/play", method = RequestMethod.GET)
-    public String play(ModelMap map) {
-        helloWorldService.playWithDB(map);
-        return "play";
     }
 
     protected void setHelloWorldService(HelloWorldService helloWorldService) {
