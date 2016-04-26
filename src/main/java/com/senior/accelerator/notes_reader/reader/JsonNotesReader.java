@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.senior.accelerator.notes_reader.dao.Note;
+import com.senior.accelerator.notes_reader.dao.NoteJsonFileData;
 import com.senior.accelerator.notes_reader.parser.JsonNoteParser;
 
 /**
@@ -18,31 +19,22 @@ public class JsonNotesReader implements NotesReader  {
 
     @Autowired
     private JsonNoteParser jsonNoteParser;
+    //TODO: Investigate what happens if no NoteJsonFileData bean definitions exist!
     @Autowired
-    private FileNameFactory fileNameFactory;
-
-    @Override
-    public List<Note> read(String subject) {
-        List<Note> notes = new ArrayList<>();
-        for (String fileName : fileNameFactory.createFileNamesBySubject(subject)) {
-            Note note = jsonNoteParser.parse(fileName);
-            notes.add(note);
-        }
-        return notes;
-    }
+    private List<NoteJsonFileData> noteJsonFileDataList;
 
     @Override
     public List<Note> readAll() {
         List<Note> notes = new ArrayList<>();
-        for (String fileName : fileNameFactory.createAllFileNames()) {
-            Note note = jsonNoteParser.parse(fileName);
+        for (NoteJsonFileData noteJsonFileData : noteJsonFileDataList) {
+            Note note = jsonNoteParser.parse(noteJsonFileData.getFilename(), noteJsonFileData.getNoteType());
             notes.add(note);
         }
         return notes;
     }
 
-    protected void setFileNameFactory(FileNameFactory fileNameFactory) {
-        this.fileNameFactory = fileNameFactory;
+    protected void setNoteJsonFileDataList(List<NoteJsonFileData> noteJsonFileDataList) {
+        this.noteJsonFileDataList = noteJsonFileDataList;
     }
 
     protected void setJsonNoteParser(JsonNoteParser jsonNoteParser) {

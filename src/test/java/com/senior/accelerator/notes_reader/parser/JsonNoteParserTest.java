@@ -48,7 +48,7 @@ public class JsonNoteParserTest extends EasyMockSupport {
         Note actualResult = jsonNoteParser.parse(FILE_NAME);
         //THEN
         verifyAll();
-        assertThat(exectedResult, is(actualResult));
+        assertThat(actualResult, is(exectedResult));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class JsonNoteParserTest extends EasyMockSupport {
         Note actualResult = jsonNoteParser.parse(FILE_NAME, DesignPatternNote.class);
         //THEN
         verifyAll();
-        assertThat(exectedResult, is(actualResult));
+        assertThat(actualResult, is(exectedResult));
     }
 
     @Test(expectedExceptions = JsonNoteParseException.class, expectedExceptionsMessageRegExp = ERROR_MESSAGE)
