@@ -13,7 +13,6 @@ import com.senior.accelerator.notes_reader.service.HelloWorldService;
 /**
  * Controller for Hello World.
  * @author Peter Takacs
- *
  */
 @Controller
 public class HelloWorldController {
