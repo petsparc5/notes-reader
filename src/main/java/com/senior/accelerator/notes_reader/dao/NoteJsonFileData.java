@@ -23,16 +23,8 @@ public class NoteJsonFileData {
         return filename;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
-
     public Class getNoteType() {
         return noteType;
-    }
-
-    public void setNoteType(Class noteType) {
-        this.noteType = noteType;
     }
 
 }
