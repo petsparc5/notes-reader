@@ -18,7 +18,8 @@ import com.senior.accelerator.notes_reader.service.HelloWorldService;
 public class HelloWorldController {
 
     private static final String LOG_MESSAGE = "Alert! Someone is trying to make contact!";
-    private final static Logger logger = LoggerFactory.getLogger(HelloWorldController.class);
+    private static final Logger logger = LoggerFactory.getLogger(HelloWorldController.class);
+    private static final String MESSAGE = "message";
 
     @Autowired
     private HelloWorldService helloWorldService;
@@ -31,7 +32,7 @@ public class HelloWorldController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String helloWorld(ModelMap map) {
         logger.error(LOG_MESSAGE);
-        helloWorldService.addMessage(map);
+        map.put(MESSAGE ,helloWorldService.getMessage());
         return "index";
     }
 

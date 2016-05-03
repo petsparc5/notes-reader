@@ -15,6 +15,7 @@ import com.senior.accelerator.notes_reader.facade.NotesDisplayFacade;
 @Controller
 public class NotesDisplayController {
 
+    private static final String ALL_NOTES = "allNotes";
     @Autowired
     private NotesDisplayFacade notesDisplayFacade;
 
@@ -25,8 +26,8 @@ public class NotesDisplayController {
      */
     @RequestMapping(value = "/allNotes", method = RequestMethod.GET)
     public String allNotes(ModelMap map) {
-        notesDisplayFacade.addAllNotes(map);
-        return "allNotes";
+        map.put(ALL_NOTES, notesDisplayFacade.getAllNotes());
+        return ALL_NOTES;
     }
 
     protected void setNotesDisplayFacade(NotesDisplayFacade notesDisplayFacade) {

@@ -11,7 +11,6 @@ import org.springframework.ui.ModelMap;
 @Service
 public class HelloWorldService {
 
-    private static final String MESSAGE = "message";
     private static final String MESSAGE_VALUE = "Hello World, Hello Master Peter!";
 
 
@@ -19,8 +18,8 @@ public class HelloWorldService {
      * Populates the ModelMap with a Hello World message.
      * @param map - Modelmap
      */
-    public void addMessage(ModelMap map) {
-        map.put(MESSAGE, MESSAGE_VALUE);
+    public String getMessage() {
+        return MESSAGE_VALUE;
     }
 
 }

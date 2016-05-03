@@ -1,9 +1,11 @@
 package com.senior.accelerator.notes_reader.facade;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.ModelMap;
 
+import com.senior.accelerator.notes_reader.dao.Note;
 import com.senior.accelerator.notes_reader.service.NotesDisplayService;
 
 /**
@@ -19,11 +21,10 @@ public class NotesDisplayFacade {
     private NotesDisplayService notesDisplayService;
 
     /**
-     * Adds all the notes gathered by the notesDisplayService to the map.
-     * @param map where all the notes need to be stored.
+     * returns all the notesDisplayService.
      */
-    public void addAllNotes(ModelMap map) {
-        map.put(ALL_NOTES, notesDisplayService.gatherNotes());
+    public List<Note> getAllNotes() {
+        return notesDisplayService.gatherNotes();
     }
 
     protected void setNotesDisplayService(NotesDisplayService notesDisplayService) {

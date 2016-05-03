@@ -1,8 +1,9 @@
 package com.senior.accelerator.notes_reader.web;
 
-import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.expect;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.testng.Assert.assertTrue;
 
 import org.easymock.EasyMockSupport;
 import org.springframework.ui.ModelMap;
@@ -18,6 +19,8 @@ import com.senior.accelerator.notes_reader.service.HelloWorldService;
 public class HelloWorldControllerTest extends EasyMockSupport {
 
     private static final String INDEX = "index";
+    private static final String MESSAGE = "message";
+    private static final String VALUE = "value";
     private HelloWorldController helloWorldController;
     private HelloWorldService helloWorldService;
 
@@ -33,13 +36,14 @@ public class HelloWorldControllerTest extends EasyMockSupport {
     public void testHelloWorld() {
         //GIVEN
         ModelMap map = new ModelMap();
-        helloWorldService.addMessage(map);
-        expectLastCall();
+        expect(helloWorldService.getMessage()).andReturn(VALUE);
         replayAll();
         //WHEN
         String actual = helloWorldController.helloWorld(map);
         //THEN
         verifyAll();
         assertThat(INDEX, is(actual));
+        assertTrue(map.containsAttribute(MESSAGE));
+        assertThat((String) map.get(MESSAGE), is(VALUE));
     }
 }

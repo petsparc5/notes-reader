@@ -33,7 +33,7 @@ public class NotesDisplayServiceTest extends EasyMockSupport {
     }
 
     @Test
-    public void testAddMessage() {
+    public void tesGatherNotes() {
         //GIVEN
         List<Note> notes = new ArrayList<>();
         notes.add(new DesignPatternNote(2, "patternName", "data"));
