@@ -60,7 +60,7 @@ public class JsonNoteParser {
         this.objectMapper = objectMapper;
     }
 
-    public void setClassLoaderSupplier(Supplier<ClassLoader> classLoaderSupplier) {
+    protected void setClassLoaderSupplier(Supplier<ClassLoader> classLoaderSupplier) {
         this.classLoaderSupplier = classLoaderSupplier;
     }
 }
