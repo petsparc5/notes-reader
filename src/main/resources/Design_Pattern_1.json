@@ -1,6 +1,6 @@
 {
   "subject": "Design Patterns",
   "id": 1,
-  "patterName": "Factory Method pattern",
+  "patternName": "Factory Method pattern",
   "data": "Factory method pattern creates objects without specifying the exact class to create."
 }

@@ -15,6 +15,9 @@ public class RegularNote implements Note {
     @JsonProperty(value = "data")
     private String data;
 
+    public RegularNote() {
+    }
+
     public RegularNote(int id, String subject, String data) {
         this.id = id;
         this.subject = subject;

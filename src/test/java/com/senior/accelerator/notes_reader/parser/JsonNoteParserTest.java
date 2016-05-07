@@ -8,8 +8,12 @@ import static org.hamcrest.core.Is.is;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.function.Supplier;
 
 import org.easymock.EasyMockSupport;
+import org.easymock.IMocksControl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -24,50 +28,66 @@ import com.senior.accelerator.notes_reader.dao.RegularNote;
  */
 public class JsonNoteParserTest extends EasyMockSupport {
 
+    public static final String URL = "URL";
     private static final String FILE_NAME = "fileName";
     private static final String MESSAGE = "message";
     private static final String ERROR_MESSAGE = "Parsing error occurred with file: fileName, message: message";
     private JsonNoteParser jsonNoteParser;
+    private IMocksControl control;
     private ObjectMapper objectMapper;
+    private Supplier<ClassLoader> classLoaderSupplier;
+    private ClassLoader classLoader;
+    private InputStream resourceAsStream;
 
     @BeforeMethod
     public void init() {
         jsonNoteParser = new JsonNoteParser();
-        objectMapper = createMock(ObjectMapper.class);
+        control = createControl();
+        objectMapper = control.createMock(ObjectMapper.class);
+        classLoaderSupplier = control.createMock(Supplier.class);
+        classLoader = control.createMock(ClassLoader.class);
+        resourceAsStream = control.createMock(InputStream.class);
         jsonNoteParser.setObjectMapper(objectMapper);
+        jsonNoteParser.setClassLoaderSupplier(classLoaderSupplier);
         resetAll();
     }
 
     @Test
     public void testParseForARegularNote() throws IOException {
         //GIVEN
-        Note exectedResult = createRegularNote();
-        expect(objectMapper.readValue(anyObject(File.class), eq(RegularNote.class))).andReturn(createRegularNote());
+        Note expectedResult = createRegularNote();
+        expect(classLoaderSupplier.get()).andReturn(classLoader);
+        expect(classLoader.getResourceAsStream(FILE_NAME)).andReturn(resourceAsStream);
+        expect(objectMapper.readValue(resourceAsStream, RegularNote.class)).andReturn(createRegularNote());
         replayAll();
         //WHEN
         Note actualResult = jsonNoteParser.parse(FILE_NAME);
         //THEN
         verifyAll();
-        assertThat(actualResult, is(exectedResult));
+        assertThat(actualResult, is(expectedResult));
     }
 
     @Test
     public void testParseForADesignPatternNote() throws IOException {
         //GIVEN
-        Note exectedResult = createDesignPatternsNote();
-        expect(objectMapper.readValue(anyObject(File.class), eq(DesignPatternNote.class))).andReturn(createDesignPatternsNote());
+        Note expectedResult = createDesignPatternsNote();
+        expect(classLoaderSupplier.get()).andReturn(classLoader);
+        expect(classLoader.getResourceAsStream(FILE_NAME)).andReturn(resourceAsStream);
+        expect(objectMapper.readValue(resourceAsStream, DesignPatternNote.class)).andReturn(createDesignPatternsNote());
         replayAll();
         //WHEN
         Note actualResult = jsonNoteParser.parse(FILE_NAME, DesignPatternNote.class);
         //THEN
         verifyAll();
-        assertThat(actualResult, is(exectedResult));
+        assertThat(actualResult, is(expectedResult));
     }
 
     @Test(expectedExceptions = JsonNoteParseException.class, expectedExceptionsMessageRegExp = ERROR_MESSAGE)
     public void testParseForARegularNoteShouldThrowJsonNoteParseExceptionWhenReadingFileFails() throws IOException {
         //GIVEN
-        expect(objectMapper.readValue(anyObject(File.class), eq(RegularNote.class))).andThrow(new IOException(MESSAGE));
+        expect(classLoaderSupplier.get()).andReturn(classLoader);
+        expect(classLoader.getResourceAsStream(FILE_NAME)).andReturn(resourceAsStream);
+        expect(objectMapper.readValue(resourceAsStream, RegularNote.class)).andThrow(new IOException(MESSAGE));
         replayAll();
         //WHEN
         jsonNoteParser.parse(FILE_NAME);
@@ -77,7 +97,9 @@ public class JsonNoteParserTest extends EasyMockSupport {
     @Test(expectedExceptions = JsonNoteParseException.class)
     public void testParseForADesignPatterNoteShouldThrowJsonNoteParseExceptionWhenReadingFileFails() throws IOException {
         //GIVEN
-        expect(objectMapper.readValue(anyObject(File.class), eq(DesignPatternNote.class))).andThrow(new IOException(MESSAGE));
+        expect(classLoaderSupplier.get()).andReturn(classLoader);
+        expect(classLoader.getResourceAsStream(FILE_NAME)).andReturn(resourceAsStream);
+        expect(objectMapper.readValue(resourceAsStream, DesignPatternNote.class)).andThrow(new IOException(MESSAGE));
         replayAll();
         //WHEN
         jsonNoteParser.parse(FILE_NAME, DesignPatternNote.class);

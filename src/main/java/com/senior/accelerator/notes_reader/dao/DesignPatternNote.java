@@ -19,6 +19,9 @@ public class DesignPatternNote implements Note {
     @JsonProperty(value = "data")
     private String data;
 
+    public DesignPatternNote() {
+    }
+
     public DesignPatternNote(int id, String patternName, String data) {
         this.id = id;
         this.patternName = patternName;

@@ -2,6 +2,8 @@ package com.senior.accelerator.notes_reader.parser;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.function.Supplier;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +22,10 @@ public class JsonNoteParser {
 
     private static final String ERROR_MESSAGE = "Parsing error occurred with file: %s, message: %s";
     private static final String LOG_MESSAGE = "Successfuly parsed: %s";
-    private final static Logger logger = LoggerFactory.getLogger(JsonNoteParser.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsonNoteParser.class);
 
     private ObjectMapper objectMapper = new ObjectMapper();
+    private Supplier<ClassLoader> classLoaderSupplier = () -> {return getClass().getClassLoader();};
 
     /**
      * Parses a file into a @RegularNote.
@@ -40,10 +43,11 @@ public class JsonNoteParser {
      * @return Note for type: noteType parsed from the file.
      */
     public Note parse(String fileName, Class<? extends Note> noteType) {
-        File file = new File(fileName);
+        ClassLoader classLoader = classLoaderSupplier.get();
         Note parsedNote = null;
         try {
-            parsedNote = objectMapper.readValue(file, noteType);
+            InputStream resourceAsStream = classLoader.getResourceAsStream(fileName);
+            parsedNote = objectMapper.readValue(resourceAsStream, noteType);
             logger.debug(String.format(LOG_MESSAGE, fileName));
         } catch (IOException e) {
             String errorMessage = String.format(ERROR_MESSAGE, fileName, e.getMessage());
@@ -54,5 +58,9 @@ public class JsonNoteParser {
 
     protected void setObjectMapper(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
+    }
+
+    public void setClassLoaderSupplier(Supplier<ClassLoader> classLoaderSupplier) {
+        this.classLoaderSupplier = classLoaderSupplier;
     }
 }
