@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties({"subject"})
 public class DesignPatternNote implements Note {
 
-    private static final String DESIGN_PATTERN = "Design Patterns";
+    private static final String DESIGN_PATTERN = "Design_Patterns";
 
     @JsonProperty(value = "id")
     private int id;

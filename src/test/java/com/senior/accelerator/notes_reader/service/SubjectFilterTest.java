@@ -37,7 +37,7 @@ public class SubjectFilterTest {
         //GIVEN
         List<Note> notes = createNotes();
         //WHEN
-        List<Note> actual = subjectFilter.filterNotesBySubject(notes, "Design Patterns");
+        List<Note> actual = subjectFilter.filterNotesBySubject(notes, "Design_Patterns");
         //THEN
         assertThat(actual.size(), is(3));
         assertTrue(actual.contains(createDesignPatterNote(ADAPTER)));
