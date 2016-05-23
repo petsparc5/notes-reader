@@ -21,7 +21,7 @@ import com.senior.accelerator.notes_reader.dao.RegularNote;
 public class JsonNoteParser {
 
     private static final String ERROR_MESSAGE = "Parsing error occurred with file: %s, message: %s";
-    private static final String LOG_MESSAGE = "Successfuly parsed: %s";
+    private static final String LOG_MESSAGE = "Successfully parsed: %s";
     private static final Logger logger = LoggerFactory.getLogger(JsonNoteParser.class);
 
     private ObjectMapper objectMapper = new ObjectMapper();
